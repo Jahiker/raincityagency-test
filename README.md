@@ -1,99 +1,182 @@
-# Dawn
+# Shopify Developer Test - Dynamic Upsell Section
 
-[![Build status](https://github.com/shopify/dawn/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Shopify/dawn/actions/workflows/ci.yml?query=branch%3Amain)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?color=informational)](/.github/CONTRIBUTING.md)
+Technical test for frontend developer position
 
-[Getting started](#getting-started) |
-[Staying up to date with Dawn changes](#staying-up-to-date-with-dawn-changes) |
-[Developer tools](#developer-tools) |
-[Contributing](#contributing) |
-[Code of conduct](#code-of-conduct) |
-[Theme Store submission](#theme-store-submission) |
-[License](#license)
+Author: Jahiker Rojas -
+<https://jahiker.github.io/jahiker/>
 
-Dawn represents a HTML-first, JavaScript-only-as-needed approach to theme development. It's Shopify's first source available theme with performance, flexibility, and [Online Store 2.0 features](https://www.shopify.com/partners/blog/shopify-online-store) built-in and acts as a reference for building Shopify themes.
+## Store preview
 
-* **Web-native in its purest form:** Themes run on the [evergreen web](https://www.w3.org/2001/tag/doc/evergreen-web/). We leverage the latest web browsers to their fullest, while maintaining support for the older ones through progressive enhancement—not polyfills.
-* **Lean, fast, and reliable:** Functionality and design defaults to “no” until it meets this requirement. Code ships on quality. Themes must be built with purpose. They shouldn’t support each and every feature in Shopify.
-* **Server-rendered:** HTML must be rendered by Shopify servers using Liquid. Business logic and platform primitives such as translations and money formatting don’t belong on the client. Async and on-demand rendering of parts of the page is OK, but we do it sparingly as a progressive enhancement.
-* **Functional, not pixel-perfect:** The Web doesn’t require each page to be rendered pixel-perfect by each browser engine. Using semantic markup, progressive enhancement, and clever design, we ensure that themes remain functional regardless of the browser.
+Theme: <https://jr-dev-shop.myshopify.com/?_ab=0&_bt=eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaDVxY2kxa1pYWXRjMmh2Y0M1dGVYTm9iM0JwWm5rdVkyOXRCam9HUlZRPSIsImV4cCI6IjIwMjQtMDktMjJUMjM6NTc6MTIuOTcyWiIsInB1ciI6InBlcm1hbmVudF9wYXNzd29yZF9ieXBhc3MifX0%3D--3ca60d465b8646a423b3b258fabf72fd0bbaea7a&_fd=0&_sc=1&key=87718d973041cc7838cc0f711b1b674103187fdaf2f40f571ac0250cf54e96ec&preview_theme_id=144956621014>
 
-You can find a more detailed version of our theme code principles in the [contribution guide](https://github.com/Shopify/dawn/blob/main/.github/CONTRIBUTING.md#theme-code-principles).
+Password: devstore
 
-## Getting started
-We recommend using Dawn as a starting point for theme development. [Learn more on Shopify.dev](https://shopify.dev/themes/getting-started/create).
+## Github repo
 
-> If you're building a theme for the Shopify Theme Store, then you can use Dawn as a starting point. However, the theme that you submit needs to be [substantively different from Dawn](https://shopify.dev/themes/store/requirements#uniqueness) so that it provides added value for merchants. Learn about the [ways that you can use Dawn](https://shopify.dev/themes/tools/dawn#ways-to-use-dawn).
+<https://github.com/Jahiker/raincityagency-test>
 
-Please note that the main branch may include code for features not yet released. The "stable" version of Dawn is available in the theme store.
+## Upsell feature
 
-## Staying up to date with Dawn changes
+I added a new block section on the PDP for the upsell section
 
-Say you're building a new theme off Dawn but you still want to be able to pull in the latest changes, you can add a remote `upstream` pointing to this Dawn repository.
-
-1. Navigate to your local theme folder.
-2. Verify the list of remotes and validate that you have both an `origin` and `upstream`:
-```sh
-git remote -v
-```
-3. If you don't see an `upstream`, you can add one that points to Shopify's Dawn repository:
-```sh
-git remote add upstream https://github.com/Shopify/dawn.git
-```
-4. Pull in the latest Dawn changes into your repository:
-```sh
-git fetch upstream
-git pull upstream main
+```javascript
+{
+    "type": "upsell",
+    "name": "t:sections.main-product.blocks.upsell.name",
+    "settings": [
+    {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.main-product.blocks.upsell.settings.title",
+        "default": "Upsell"
+    }
+    ]
+}
 ```
 
-## Developer tools
+and the case for the block on the main product section
 
-There are a number of really useful tools that the Shopify Themes team uses during development. Dawn is already set up to work with these tools.
-
-### Shopify CLI
-
-[Shopify CLI](https://github.com/Shopify/shopify-cli) helps you build Shopify themes faster and is used to automate and enhance your local development workflow. It comes bundled with a suite of commands for developing Shopify themes—everything from working with themes on a Shopify store (e.g. creating, publishing, deleting themes) or launching a development server for local theme development.
-
-You can follow this [quick start guide for theme developers](https://shopify.dev/docs/themes/tools/cli) to get started.
-
-### Theme Check
-
-We recommend using [Theme Check](https://github.com/shopify/theme-check) as a way to validate and lint your Shopify themes.
-
-We've added Theme Check to Dawn's [list of VS Code extensions](/.vscode/extensions.json) so if you're using Visual Studio Code as your code editor of choice, you'll be prompted to install the [Theme Check VS Code](https://marketplace.visualstudio.com/items?itemName=Shopify.theme-check-vscode) extension upon opening VS Code after you've forked and cloned Dawn.
-
-You can also run it from a terminal with the following Shopify CLI command:
-
-```bash
-shopify theme check
+```liquid
+{%- when 'upsell' -%}
+    {% render 'upsell', title: block.settings.title %}
 ```
 
-### Continuous Integration
+<https://github.com/Jahiker/raincityagency-test/blob/main/sections/main-product.liquid>
 
-Dawn uses [GitHub Actions](https://github.com/features/actions) to maintain the quality of the theme. [This is a starting point](https://github.com/Shopify/dawn/blob/main/.github/workflows/ci.yml) and what we suggest to use in order to ensure you're building better themes. Feel free to build off of it!
+For register every PDP that the customer visit, I added a web component that save thet product handle on a array and save it on the localstorage
 
-#### Shopify/lighthouse-ci-action
+```javascript
+class LastVisitedProducts extends HTMLElement {
+  constructor() {
+    super();
 
-We love fast websites! Which is why we created [Shopify/lighthouse-ci-action](https://github.com/Shopify/lighthouse-ci-action). This runs a series of [Google Lighthouse](https://developers.google.com/web/tools/lighthouse) audits for the home, product and collections pages on a store to ensure code that gets added doesn't degrade storefront performance over time.
+    this.visitedProductsList = [];
+    this.currentProduct = null;
 
-#### Shopify/theme-check-action
+    this.init();
+  }
 
-Dawn runs [Theme Check](#Theme-Check) on every commit via [Shopify/theme-check-action](https://github.com/Shopify/theme-check-action).
+  /**
+   * Initializes the LastVisitedProducts by retrieving the last visited products from local storage
+   * and setting the current product. It also updates the list of visited products.
+   *
+   * @return {void}
+   */
+  init() {
+    this.visitedProductsList = JSON.parse(window.localStorage.getItem('lastVisitedProducts_V1') || '[]');
+    this.currentProduct = this.dataset.productHandle;
 
-## Contributing
+    this.updateList();
+  }
 
-Want to make commerce better for everyone by contributing to Dawn? We'd love your help! Please read our [contributing guide](https://github.com/Shopify/dawn/blob/main/.github/CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, and how to build for Dawn.
+  /**
+   * Updates the list of visited products by adding the current product if it's not already included.
+   *
+   * @return {void}
+   */
+  updateList() {
+    if (this.currentProduct) {
+      if (!this.visitedProductsList.includes(this.currentProduct)) {
+        this.visitedProductsList.push(this.currentProduct);
+        window.localStorage.setItem('lastVisitedProducts_V1', JSON.stringify(this.visitedProductsList));
+      }
+    }
+  }
+}
 
-## Code of conduct
+customElements.define('last-visited-products', LastVisitedProducts);
+```
 
-All developers who wish to contribute through code or issues, please first read our [Code of Conduct](https://github.com/Shopify/dawn/blob/main/.github/CODE_OF_CONDUCT.md).
+and then for rendering the upsell products list, I create another web component that get the visited products list and then loop into the array and using the rendering section api, get the product card snippet for every product on the list and appen into the section
 
-## Theme Store submission
+```javascript
+class UpsellProduct extends HTMLElement {
+  constructor() {
+    super();
 
-The [Shopify Theme Store](https://themes.shopify.com/) is the place where Shopify merchants find the themes that they'll use to showcase and support their business. As a theme partner, you can create themes for the Shopify Theme Store and reach an international audience of an ever-growing number of entrepreneurs.
+    this.productList = [];
 
-Ensure that you follow the list of [theme store requirements](https://shopify.dev/themes/store/requirements) if you're interested in becoming a [Shopify Theme Partner](https://themes.shopify.com/services/themes/guidelines) and building themes for the Shopify platform.
+    this.init();
+  }
 
-## License
+  /**
+   * Initializes the UpsellProduct by retrieving the last visited products from local storage
+   * and setting the current product. It also adds an event listener to render the upsell list
+   * when the DOM content is loaded.
+   *
+   * @return {void}
+   */
+  init() {
+    this.productList = JSON.parse(window.localStorage.getItem('lastVisitedProducts_V1') || '[]');
+    this.currentProduct = this.dataset.productHanlde;
 
-Copyright (c) 2021-present Shopify Inc. See [LICENSE](/LICENSE.md) for further details.
+    document.addEventListener('DOMContentLoaded', () => {
+      this.renderUpsellList();
+    });
+  }
+
+  /**
+   * Renders the list of upsell products by fetching their card views and appending them to the DOM.
+   *
+   * @return {Promise} A promise that resolves when all product cards have been loaded and appended.
+   */
+  renderUpsellList() {
+    if (this.productList.length > 0) {
+      Promise.all(
+        this.productList.map(async (product) => {
+          if (product !== this.currentProduct) {
+            await fetch(`/products/${product}?view=card`)
+              .then((res) => res.text())
+              .then((res) => {
+                const text = res;
+                const parser = new DOMParser();
+                const htmlDocument = parser.parseFromString(text, 'text/html');
+                const productCard = htmlDocument.documentElement.querySelector('.card-wrapper');
+                if (productCard) {
+                  this.append(productCard);
+                }
+              })
+              .catch((err) => console.error(`[Shopify Wishlist] Failed to load content for handle: ${handle}`, err));
+          }
+        })
+      ).then(() => {
+        this.buildSlider('.splide.splide_upsell');
+      });
+    }
+  }
+
+  /**
+   * Initializes and mounts a Splide slider instance.
+   *
+   * @param {string} selector - The CSS selector for the slider container.
+   * @return {void}
+   */
+  buildSlider(selector) {
+    new Splide(`${selector}`, {
+      perPage: 1,
+      gap: 10,
+      padding: { left: 0, right: 50 },
+    }).mount();
+  }
+}
+
+customElements.define('upsell-product', UpsellProduct);
+```
+
+<https://github.com/Jahiker/raincityagency-test/blob/main/assets/upsell.js>
+
+for getting the product card snippet, I created a new template with just a new snippet product-card-upsell.liquid and then using the parameter "?view=card" on the endpoint, it let get all the html for the product that i require.
+
+```liquid
+{% render 'card-product-upsell',
+  card_product: product,
+  media_aspect_ratio: 'adapt',
+  show_secondary_image: true,
+  show_vendor: true,
+  show_rating: false,
+  show_quick_add: false,
+  quick_add: true,
+  section_id: 'MainProduct-{{ product.id }}',
+  color_family_mobile: true
+%}
+```
