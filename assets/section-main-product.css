@@ -1209,7 +1209,7 @@ a.product__text {
 }
 
 .product__inventory .icon-inventory-status circle:first-of-type {
-  opacity: .3;
+  opacity: 0.3;
 }
 
 /* Icon with text */
@@ -1491,4 +1491,16 @@ a.product__text {
   .recipient-form > input[type='checkbox']:checked + label .icon-checkmark {
     border: none;
   }
+}
+
+/* Upsell Section */
+.upsell__section {
+  width: 100%;
+}
+
+.upsell__section .upsell__section_title {
+  margin-top: 3rem;
+  margin-bottom: 0;
+  font-weight: 600;
+  font-size: 2rem;
 }

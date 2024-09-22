@@ -2366,6 +2366,12 @@
               "default": "Heading"
             }
           }
+        },
+        "upsell": {
+          "name": "Upsell",
+          "settings": {
+            "title": "Title"
+          }
         }
       },
       "settings": {
